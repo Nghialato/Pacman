@@ -31,6 +31,8 @@ def draw_board(lv):
                 pygame.draw.line(screen, color, (j*num2, (i + 0.5)*num1), (j*num2 + num2, i*num1 + 0.5*num1), 3)
             if lv[i][j] == 5:
                 pygame.draw.arc(screen, color, [(j*num2 - 0.4*num2) - 2, (i + 0.5)*num1, num2, num1], 0, Pi/2, 3)
+            if lv[i][j] == 6:
+                pygame.draw.arc(screen, color, [j*num2 , (i + 0.5)*num1, num2, num1], Pi/2, Pi, 3)
             if lv[i][j] == 9:
                 pygame.draw.line(screen, 'white', (j*num2, (i + 0.5)*num1), (j*num2 + num2, i*num1 + 0.5*num1), 3)
 
