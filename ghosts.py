@@ -33,7 +33,7 @@ class Ghost(Entity):
         Entity.update(self, dt)
 
     def scatter(self):
-        self.goal = Vector2()
+        self.goal = Vector2(TILEWIDTH*NCOLS, 0)
 
     def chase(self):
         self.goal = self.pacman.position
@@ -81,7 +81,7 @@ class Pinky(Ghost):
         self.sprites = GhostSprites(self)
 
     def scatter(self):
-        self.goal = Vector2(TILEWIDTH*NCOLS, 0)
+        self.goal = Vector2()
 
     def chase(self):
         self.goal = self.pacman.position + self.pacman.directions[self.pacman.direction] * TILEWIDTH * 4

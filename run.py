@@ -1,4 +1,5 @@
 import pygame
+import os
 from pygame.locals import *
 from constants import *
 from pacman import Pacman
@@ -11,6 +12,8 @@ from text import TextGroup
 from sprites import LifeSprites
 from sprites import MazeSprites
 from mazedata import MazeData
+
+os.chdir("C:\\Users\\Hoang Pham\\Desktop\\PacmanAI_20221\\Pacman")  
 
 class GameController(object):
     def __init__(self):
@@ -43,7 +46,7 @@ class GameController(object):
         self.background_flash = self.mazesprites.constructBackground(self.background_flash, 5)
         self.flashBG = False
         self.background = self.background_norm
-
+ 
     def startGame(self):      
         self.mazedata.loadMaze(self.level)
         self.mazesprites = MazeSprites(self.mazedata.obj.name+".txt", self.mazedata.obj.name+"_rotation.txt")
@@ -63,7 +66,7 @@ class GameController(object):
 
         self.nodes.denyHomeAccess(self.pacman)
         self.nodes.denyHomeAccessList(self.ghosts)
-        self.ghosts.inky.startNode.denyAccess(RIGHT, self.ghosts.inky)
+        self.ghosts.inky.startNode.denyAccess(RIGHT, self.ghosts.inky) 
         self.ghosts.clyde.startNode.denyAccess(LEFT, self.ghosts.clyde)
         self.mazedata.obj.denyGhostsAccess(self.ghosts, self.nodes)
 
@@ -94,12 +97,11 @@ class GameController(object):
         self.nodes.denyAccessList(12, 14, UP, self.ghosts)
         self.nodes.denyAccessList(15, 14, UP, self.ghosts)
         self.nodes.denyAccessList(12, 26, UP, self.ghosts)
-        self.nodes.denyAccessList(15, 26, UP, self.ghosts)
-
+        self.nodes.denyAccessList(15, 26, UP, self.ghosts) 
         
 
     def update(self):
-        dt = self.clock.tick(30) / 1000.0
+        dt = self.clock.tick(60) / 1000.0
         self.textgroup.update(dt)
         self.pellets.update(dt)
         if not self.pause.paused:
@@ -115,7 +117,7 @@ class GameController(object):
                 self.pacman.update(dt, self.ghosts, self.pellets.pelletList)
         else:
             self.pacman.update(dt, self.ghosts, self.pellets.pelletList)
-
+ 
         if self.flashBG:
             self.flashTimer += dt
             if self.flashTimer >= self.flashTime:
@@ -161,7 +163,7 @@ class GameController(object):
             if self.pellets.isEmpty():
                 self.flashBG = True
                 self.hideEntities()
-                self.pause.setPause(pauseTime=3, func=self.nextLevel)
+                self.pause.setPause(playerPaused = True,pauseTime=3)
 
     def checkGhostEvents(self):
         for ghost in self.ghosts:
@@ -179,11 +181,7 @@ class GameController(object):
                     if self.pacman.alive:
                         self.lives -=  1
                         self.lifesprites.removeImage()
-                        self.pacman.die()
-                        print(self.pacman.position)
-                        for ghost in self.ghosts:
-                            print(ghost.position)
-
+                        self.pacman.die()               
                         self.ghosts.hide()
                         if self.lives <= 0:
                             self.textgroup.showText(GAMEOVERTXT)
@@ -278,6 +276,3 @@ if __name__ == "__main__":
     game.startGame()
     while True:
         game.update()
-
-
-
